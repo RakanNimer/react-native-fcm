@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import android.content.Context;
+import android.app.Activity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,7 +91,7 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
     public void cancelAll() {
       mFIRLocalMessagingHelper.cancelAll();
     }
-    
+
     @ReactMethod
     public void subscribeToTopic(String topic){
         FirebaseMessaging.getInstance().subscribeToTopic(topic);
@@ -186,7 +187,7 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity currentActivity, int requestCode, int resultCode, Intent data) {
     }
 
     @Override
