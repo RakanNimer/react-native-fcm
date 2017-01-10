@@ -130,4 +130,22 @@ RCT_EXPORT_METHOD(unsubscribeFromTopic: (NSString*) topic)
                                               body:notification.userInfo];
 }
 
+RCT_EXPORT_METHOD(presentLocalNotification:(id)data resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  if([UNUserNotificationCenter currentNotificationCenter] != nil){
+    UNNotificationRequest* request = [RCTConvert UNNotificationRequest:data];
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+      if (!error) {
+        resolve(nil);
+      }else{
+        reject(@"notification_error", @"Failed to present local notificaton", error);
+      }
+    }];
+  } else{
+    UILocalNotification* notif = [RCTConvert UILocalNotification:data];
+    [RCTSharedApplication() presentLocalNotificationNow:notif];
+    resolve(nil);
+  }
+}
+
 @end
